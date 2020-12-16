@@ -60,6 +60,7 @@ test("run clang-tidy", () => {
     "bin",
     "clang-tidy-ubuntu"
   );
+  console.log(`clang_tidy_path: ${clang_tidy_path}`);
   const args = process.argv.slice(2).concat("--version");
   // .concat("-checks=-*,cppcoreguidelines-avoid-goto")
   // .concat(filenames);
