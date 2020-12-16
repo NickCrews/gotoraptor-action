@@ -51,14 +51,29 @@ test("dummy", () => {
 
 const path = require("path");
 const proc = require("child_process");
+const os = require("os");
 
 test("run clang-tidy", () => {
-  const { GITHUB_WORKSPACE } = process.env;
+  let clang_tidy_bin;
+  const type = os.type();
+  switch (type) {
+    case "Linux":
+      clang_tidy_bin = "clang-tidy10.0.0-ubuntu18.04";
+      break;
+    case "Darwin":
+      clang_tidy_bin = "clang-tidy10.0.0-apple-darwin";
+      break;
+    default:
+      throw new Error(
+        `Unsupported platform ${type}. Only Linux and Darwin are supported.`
+      );
+  }
+  const project_root = path.join(__dirname, "..");
   const clang_tidy_path = path.join(
-    GITHUB_WORKSPACE,
+    project_root,
     "dist",
     "bin",
-    "clang-tidy10.0.0-ubuntu18.04"
+    clang_tidy_bin
   );
   console.log(`clang_tidy_path: ${clang_tidy_path}`);
   const args = process.argv.slice(2).concat("--version");
@@ -66,8 +81,8 @@ test("run clang-tidy", () => {
   // .concat(filenames);
   console.debug(`clang-tidy args: ${args}`);
   const child = proc.spawnSync(clang_tidy_path, args, {
-    stdio: "inherit",
-    cwd: GITHUB_WORKSPACE,
+    // stdio: "inherit",
+    cwd: project_root,
     timeout: 30 * 1000,
   });
   console.debug(`Ran clang-tidy: ${JSON.stringify(child)}`);
