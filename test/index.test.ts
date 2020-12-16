@@ -58,7 +58,7 @@ test("run clang-tidy", () => {
     GITHUB_WORKSPACE,
     "dist",
     "bin",
-    "clang-tidy-ubuntu"
+    "clang-tidy10.0.0-ubuntu18.04"
   );
   console.log(`clang_tidy_path: ${clang_tidy_path}`);
   const args = process.argv.slice(2).concat("--version");
