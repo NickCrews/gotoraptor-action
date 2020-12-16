@@ -49,6 +49,33 @@ test("dummy", () => {
   expect(true).toBe(true);
 });
 
+const path = require("path");
+const proc = require("child_process");
+
+test("run clang-tidy", () => {
+  const { GITHUB_WORKSPACE } = process.env;
+  const clang_tidy_path = path.join(
+    GITHUB_WORKSPACE,
+    "dist",
+    "bin",
+    "clang-tidy-ubuntu"
+  );
+  const args = process.argv.slice(2).concat("--version");
+  // .concat("-checks=-*,cppcoreguidelines-avoid-goto")
+  // .concat(filenames);
+  console.debug(`clang-tidy args: ${args}`);
+  const child = proc.spawnSync(clang_tidy_path, args, {
+    stdio: "inherit",
+    cwd: GITHUB_WORKSPACE,
+    timeout: 30 * 1000,
+  });
+  console.debug(`Ran clang-tidy: ${JSON.stringify(child)}`);
+  if (child.status) {
+    throw new Error(`clang-tidy failed: ${JSON.stringify(child)}`);
+  }
+  console.debug(`clang-tidy stdout: ${child.stdout}`);
+});
+
 test("e2e with file-less PR", async () => {
   mocktokit.pulls.listFiles.mockReturnValueOnce({
     // TODO: somehow this doesn't crash the program, but it should.
