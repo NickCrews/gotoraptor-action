@@ -21,3 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - uses: ./
+  clang-tidy:
+    runs-on: ubuntu-latest
+    steps:
+      - run: clang-tidy --version
