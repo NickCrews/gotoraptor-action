@@ -25,3 +25,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: clang-tidy --version
+  clang:
+    runs-on: ubuntu-latest
+    steps:
+      - run: clang --version
