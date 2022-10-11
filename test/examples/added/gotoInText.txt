@@ -1,0 +1,10 @@
+This goto should be ignored because it's not in a c, cpp, or h file.
+int main() {
+  int i = 0;
+  label:
+  i++;
+  if (i<5) {
+    goto label;
+  }
+  return i;
+}

@@ -8,5 +8,11 @@ int main() {
   if (i<5) {
     goto label;
   }
+  if (i<15) {
+    goto label;
+  }
+  if (i<20) {
+    goto label;
+  }
   return i;
 }

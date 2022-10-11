@@ -1,5 +1,4 @@
-// Here is a file with a pre-existing goto. Deleting it should not trigger a
-// warning
+// Adding this file should trigger a warning.
 int main() {
   int i = 0;
   label:
